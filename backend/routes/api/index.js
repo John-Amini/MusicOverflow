@@ -19,6 +19,7 @@ router.use('/users', usersRouter);
 
 
 router.post('/test', function(req, res) {
+    console.log("askdjhnasjd")
     res.json({ requestBody: req.body });
   });
 
