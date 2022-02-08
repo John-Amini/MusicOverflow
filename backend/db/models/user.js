@@ -62,6 +62,15 @@ module.exports = (sequelize, DataTypes) => {
 
    User.login = async function ({ credential, password }) {
     const { Op } = require('sequelize');
+    const testUser = await User.findOne({
+      where: {
+        [Op.or]: {
+          username: credential,
+          email: credential
+        }
+      }
+    });
+    console.log(testUser)
     const user = await User.scope('loginUser').findOne({
       where: {
         [Op.or]: {
@@ -70,6 +79,7 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     });
+
     if (user && user.validatePassword(password)) {
       return await User.scope('currentUser').findByPk(user.id);
     }
@@ -86,7 +96,13 @@ module.exports = (sequelize, DataTypes) => {
   };
 
   User.associate = function(models) {
-    // associations can be defined here
+    User.hasMany(models.Album,{foreignKey:'userId'});
+    User.hasMany(models.Song,{foreignKey:'userId'})
+    User.hasMany(models.Comment,{foreignKey:'userId'})
+    //figure out the library association for this and song
+
+    //User.belongsToMany(models.Song,{})
+    // User.belongsTo(models.Library,{foreignKey:'userId'});
   };
 
   return User;
