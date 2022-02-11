@@ -1,17 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import axios from 'axios';
-import { addSong } from '../../store/song';
+import { addSong, loadSongs } from '../../store/song';
 
 const AddSongForm = ({ }) => {
-	const sessionUser = useSelector(state => state.session.user);
 	const dispatch = useDispatch();
 	const history = useHistory();
-	const [album, setAlbum] = useState('');
+	const [album, setAlbum] = useState('placeholder');
 	const [title, setTitle] = useState('');
 	const [songUrl, setSongUrl] = useState(null);
-	const [imageUrl, setImageUrl] = useState(null);
+	const [imageUrl, setImageUrl] = useState("placeholder");
 	const [validationErrors,setValidationErrors] = useState([]);
 
 
@@ -22,24 +20,27 @@ const AddSongForm = ({ }) => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		const errors = [];
-		// const payload = {
-		// 	imageUrl,
-		// 	title,
-		// 	album
-		// }
-		// console.log(e);
-		// console.log(e.filetoupload);
-		// console.log(e.value);
-		// console.log(e.target[0]);
 		if(songUrl){
 			const formData = new FormData();
 			formData.append("song",songUrl,title)
-			formData.append("image",imageUrl,`image`);
+			formData.append("image",imageUrl);
 			formData.append("album",album);
 			formData.append('title',title)
 			console.log(formData);
-			dispatch(addSong(formData));
-			// axios.post("/api/songs",formData);
+			const createdSong = await dispatch(addSong(formData));
+
+			console.log(createdSong);
+			if(createdSong.errors){
+				for(let currErr in createdSong.errors){
+					errors.push(`${currErr} ${createdSong.errors[currErr]}`)
+				}
+				setValidationErrors(errors);
+				setTitle("")
+			} else if (createdSong){
+				//need to move to added songs location
+				await history.push(`/`);
+				// await dispatch(loadSongs());
+			}
 		}
 	};
 	// useEffect(() => {
@@ -74,9 +75,9 @@ const AddSongForm = ({ }) => {
 			{/* <form action='/songs' method='post' encType='multipart/form-data'> */}
 			<form onSubmit={handleSubmit}>
 			<input type="file" name="filetoupload" onChange={updateSongUrl}></input>
-			<input type="file" name="filetoupload" onChange={updateImageUrl}></input>
+			{/* <input type="file" name="filetoupload" onChange={updateImageUrl}></input> */}
 			<input type='text' placeholder='title' value={title} onChange={updateTitle}/>
-			<input type='text' placeholder='album' value={album} onChange={updateAlbum}/>
+			{/* <input type='text' placeholder='album' value={album} onChange={updateAlbum}/> */}
 
 			<input type={"submit"}></input>
 			</form>
