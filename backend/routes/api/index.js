@@ -4,12 +4,14 @@ const router = require('express').Router();
 const sessionRouter = require('./session.js');
 const usersRouter = require('./users.js');
 const songsRouter = require('./songs.js')
+const commentsRouter = require('./comment.js')
 router.use('/session', sessionRouter);
 
 router.use('/users', usersRouter);
 
 router.use('/songs',songsRouter)
 
+router.use('/comments',commentsRouter)
 // const asyncHandler = require('express-async-handler');
 // const { setTokenCookie } = require('../../utils/auth.js');
 // const { User } = require('../../db/models');
@@ -19,10 +21,10 @@ router.use('/songs',songsRouter)
 
 
 
-router.post('/test', function(req, res) {
-    console.log("askdjhnasjd")
-    res.json({ requestBody: req.body });
-  });
+// router.post('/test', function(req, res) {
+//     console.log("askdjhnasjd")
+//     res.json({ requestBody: req.body });
+//   });
 
   // const { requireAuth } = require('../../utils/auth.js');
 // router.get(
