@@ -31,7 +31,7 @@ const editSongType = (song,newTitle) => {
     newTitle
   }
 }
-  export const addSong = (formData) => async (dispatch) => {
+  export const addSong = (formData,username) => async (dispatch) => {
     console.log("hit addSong")
     let response;
       // console.log(response)
@@ -45,12 +45,12 @@ const editSongType = (song,newTitle) => {
         console.log("THIS IS BODY")
         console.log(body)
         return body;
-        // console.log(error.response.status);
-        // console.log(error.response.headers);
 
       });
       if(response.status === 200){
         const newSong =response.data.song;
+        newSong.User = {};
+        newSong.User.username = username;
         await dispatch(addSongType(newSong));
         console.log("hit oka?")
         return newSong;

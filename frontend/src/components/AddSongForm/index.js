@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { addSong, loadSongs } from '../../store/song';
 
 const AddSongForm = ({ }) => {
+	const sessionUser = useSelector(state => state.session.user);
 	const dispatch = useDispatch();
 	const history = useHistory();
 	const [album, setAlbum] = useState('placeholder');
@@ -17,6 +18,14 @@ const AddSongForm = ({ }) => {
 	const updateAlbum = (e) => setAlbum(e.target.value);
 	const updateImageUrl = (e) => setImageUrl(e.target.files[0]);
 	const updateSongUrl = (e) => setSongUrl(e.target.files[0])
+	useEffect(()=>{
+		const button = document.getElementById("submit")
+		if(title === "" || songUrl === null)
+			button.disabled = true;
+		else{
+			button.disabled = false;
+		}
+	},[title,songUrl])
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		const errors = [];
@@ -26,14 +35,22 @@ const AddSongForm = ({ }) => {
 			formData.append("image",imageUrl);
 			formData.append("album",album);
 			formData.append('title',title)
-			console.log(formData);
-			const createdSong = await dispatch(addSong(formData));
+			const button = document.getElementById("submit")
+			const fileInput = document.getElementById("fileInput")
+			const titleInput = document.getElementById("titleInput")
 
+			button.disabled = true;
+			fileInput.disabled = true;
+			titleInput.disabled = true;
+			const createdSong = await dispatch(addSong(formData,sessionUser.username));
 			console.log(createdSong);
 			if(createdSong.errors){
 				for(let currErr in createdSong.errors){
 					errors.push(`${currErr} ${createdSong.errors[currErr]}`)
 				}
+				button.disabled = false;
+				fileInput.disabled = false;
+				titleInput.disabled = false;
 				setValidationErrors(errors);
 				setTitle("")
 			} else if (createdSong){
@@ -74,12 +91,12 @@ const AddSongForm = ({ }) => {
 			</form> */}
 			{/* <form action='/songs' method='post' encType='multipart/form-data'> */}
 			<form onSubmit={handleSubmit}>
-			<input type="file" name="filetoupload" onChange={updateSongUrl}></input>
+			<input type="file" id='fileInput' name="filetoupload" onChange={updateSongUrl}></input>
 			{/* <input type="file" name="filetoupload" onChange={updateImageUrl}></input> */}
-			<input type='text' placeholder='title' value={title} onChange={updateTitle}/>
+			<input type='text' id='titleInput' placeholder='title' value={title} onChange={updateTitle}/>
 			{/* <input type='text' placeholder='album' value={album} onChange={updateAlbum}/> */}
 
-			<input type={"submit"}></input>
+			<input id="submit" type={"submit"}></input>
 			</form>
 
 		</section>

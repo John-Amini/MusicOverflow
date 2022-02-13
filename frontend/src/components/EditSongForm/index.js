@@ -8,6 +8,14 @@ const EditSongForm = ({ song, hideForm }) => {
     const [newTitle,setNewTitle] = useState(song.title);
     const updateNewTitle = (e) => setNewTitle(e.target.value);
 
+    useEffect(()=> {
+      let submitBut = document.getElementById(`updateSong${song.id}`)
+      if(newTitle === song.title || newTitle === ''){
+        submitBut.disabled = true
+      } else{
+        submitBut.disabled = false;
+      }
+    },[newTitle])
   const handleSubmit = async (e) => {
     e.preventDefault();
     const payload = {
@@ -26,14 +34,14 @@ const EditSongForm = ({ song, hideForm }) => {
   };
 
   return (
-    <section className="edit-form-holder centered middled">
+    <section >
       <form onSubmit={handleSubmit}>
         <input
           type="text"
           placeholder="New Title"
           value={newTitle}
           onChange={updateNewTitle} />
-        <button type="submit">Update Song</button>
+        <button id={`updateSong${song.id}`}type="submit">Update Song</button>
         <button type="button" onClick={handleCancelClick}>Cancel</button>
       </form>
     </section>

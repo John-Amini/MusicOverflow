@@ -20,9 +20,7 @@ router.get('/',asyncHandler(async (req, res) => {
         include:{
             model: User
                 }});
-          return res.json({
-            songs,
-          });
+          return res.json({songs});
         })
       )
 async function checkIfExists(userId,title){
@@ -37,7 +35,8 @@ async function checkIfExists(userId,title){
 }
 router.post('/',requireAuth,asyncHandler(async (req,res,next) => {
 //adding song here
-
+let errors = [];
+let errorFlag = false
 console.log("hit add song")
 var form = new formidable.IncomingForm();
 await form.parse(req, async function(err,fields,files) {
@@ -45,12 +44,29 @@ await form.parse(req, async function(err,fields,files) {
     let exists = await checkIfExists(req.user.dataValues.id,fields.title)
     console.log(exists)
     if(exists){
-        const err = new Error('Same song same user');
+        // const err = new Error('Same song same user');
+        // err.status = 403;
+        // err.title = 'Same song same user';
+        // err.errors = ['You provided a song title that you have already uploaded.'];
+        errors.push('You provided a song title that you have already uploaded.')
+        errorFlag = true;
+    }
+    if(!files.song){
+        errors.push("You did not upload a file!")
+        errorFlag = true
+    }
+    if(files.song && !files.song.mimetype.includes("audio")){
+        errors.push("The file you have sent is not a proper audio file");
+        errorFlag = true;
+    }
+    console.log(files.song)
+    if(errorFlag){
+        const err = new Error('Upload problem');
         err.status = 403;
-        err.title = 'Same song same user';
-        err.errors = ['You provided a song title that you have already uploaded.'];
+        err.errors = errors;
         return next(err);
     }
+
     if(files.song){
         //make sure user cannot upload same song twice with the same name
        await fs.readFile(files.song.filepath,async function(err,data){
@@ -71,8 +87,6 @@ await form.parse(req, async function(err,fields,files) {
                     title:fields.title,
                     albumId:1
                 })
-                // console.log(song)
-                // return res.redirect(`${req.baseUrl}/${id}`);
                 return res.json({song})
               })
         })
@@ -129,6 +143,7 @@ router.put('/',requireAuth,asyncHandler(async (req, res) => {
             { title: newTitle, songUrl:url },
             { where: { id: song.id} }
           )
+        //   console.log(updatedSong);
             return res.json({song:updatedSong});
         }
     })
@@ -168,7 +183,6 @@ function convertAt(email){
 }
 
 function createExpectedUrl (email,title){
-    //https://musicflowbucket.s3.amazonaws.com/john.amini97%40gmail.com/mine/mine.mp3
     let str = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/${email}/${title}/${title}.mp3`
     return str
 }
