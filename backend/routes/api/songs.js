@@ -17,6 +17,7 @@ router.get('/',asyncHandler(async (req, res) => {
     //hit get songs
     console.log("hit get songs");
     const songs = await Song.findAll({
+        order: [['createdAt', 'DESC']],
         include:{
             model: User
                 }});
@@ -49,6 +50,10 @@ await form.parse(req, async function(err,fields,files) {
         // err.title = 'Same song same user';
         // err.errors = ['You provided a song title that you have already uploaded.'];
         errors.push('You provided a song title that you have already uploaded.')
+        errorFlag = true;
+    }
+    if(fields.title.length >=255){
+        errors.push("Title is too long")
         errorFlag = true;
     }
     if(!files.song){

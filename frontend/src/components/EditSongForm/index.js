@@ -28,10 +28,10 @@ const EditSongForm = ({ song, hideForm }) => {
     hideForm();
   };
 
-  const handleCancelClick = (e) => {
-    e.preventDefault();
-    hideForm();
-  };
+  // const handleCancelClick = (e) => {
+  //   e.preventDefault();
+  //   hideForm();
+  // };
 
   return (
     <section >
@@ -42,7 +42,7 @@ const EditSongForm = ({ song, hideForm }) => {
           value={newTitle}
           onChange={updateNewTitle} />
         <button id={`updateSong${song.id}`}type="submit">Update Song</button>
-        <button type="button" onClick={handleCancelClick}>Cancel</button>
+        {/* <button type="button" onClick={handleCancelClick}>Cancel</button> */}
       </form>
     </section>
   );

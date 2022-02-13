@@ -24,10 +24,10 @@ const EditCommentForm = ({ comment, hideForm }) => {
     hideForm();
   };
 
-  const handleCancelClick = (e) => {
-    e.preventDefault();
-    hideForm();
-  };
+//   const handleCancelClick = (e) => {
+//     e.preventDefault();
+//     hideForm();
+//   };
 
   return (
     <section >
@@ -38,7 +38,7 @@ const EditCommentForm = ({ comment, hideForm }) => {
           value={newContent}
           onChange={updateNewContent} />
         <button id={`updateComment${comment.id}`}type="submit">Update Comment</button>
-        <button type="button" onClick={handleCancelClick}>Cancel</button>
+        {/* <button type="button" onClick={handleCancelClick}>Cancel</button> */}
       </form>
     </section>
   );

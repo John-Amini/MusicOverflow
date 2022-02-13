@@ -7,6 +7,7 @@ import { loadComments } from "../../store/comment";
 function ListComments({song}) {
   const sessionUser = useSelector(state => state.session.user);
   const comments = useSelector(state => state.comment);
+  const [isLoading,setIsLoading] = useState(true);
   console.log("LIST COMMENTS")
   console.log(comments);
   console.log(song.id);
@@ -14,19 +15,19 @@ function ListComments({song}) {
   const dispatch = useDispatch();
     useEffect(async ()=> {
         await dispatch(loadComments(song.id))
+        setIsLoading(false)
     },[])
   return (
     <>
       <ul>
         {
-          sessionUser &&
           Object.keys(comments).length !== 0 &&
           comments[song.id]?.map(comment => {
             return (
             <Comment key={comment.id} comment={comment}></Comment>
           )})
         }
-        {!comments[song.id] && <div>Sorry no comments</div>}
+        {!comments[song.id] && !isLoading && <div>No comments</div>}
       </ul>
     </>
   )

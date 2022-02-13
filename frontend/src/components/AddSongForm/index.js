@@ -2,7 +2,7 @@ import { useState,useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { addSong, loadSongs } from '../../store/song';
-
+import './AddSong.css'
 const AddSongForm = ({ }) => {
 	const sessionUser = useSelector(state => state.session.user);
 	const dispatch = useDispatch();
@@ -46,13 +46,16 @@ const AddSongForm = ({ }) => {
 			console.log(createdSong);
 			if(createdSong.errors){
 				for(let currErr in createdSong.errors){
-					errors.push(`${currErr} ${createdSong.errors[currErr]}`)
+					if(createdSong.errors[currErr] === "You provided a song title that you have already uploaded."){
+						setTitle("")
+					}
+
+					errors.push(`${createdSong.errors[currErr]}`)
 				}
 				button.disabled = false;
 				fileInput.disabled = false;
 				titleInput.disabled = false;
 				setValidationErrors(errors);
-				setTitle("")
 			} else if (createdSong){
 				//need to move to added songs location
 				await history.push(`/`);
@@ -60,42 +63,19 @@ const AddSongForm = ({ }) => {
 			}
 		}
 	};
-	// useEffect(() => {
-	// 	if(songUrl){
-	// 	const formData = new FormData();
-	// 	formData.append("song",songUrl,title)
-	// 	console.log(formData);
-	// 	console.log(songUrl);
-	// 	axios.post("/api/songs",formData);
-	// }
-	// 	return (console.log("cleanup"))
-	// },[songUrl])
-	//figure out how to do validation errors for a file
-		// if errors show the errors and call setValidationErrors otherwise do a history.push to the newly created song
-
+	let count = 0
 	return (
-		<section>
+		<section className='addSongFormSection'>
 			{validationErrors.length > 0 && (
 				<div className='errorsContainer'>
 					{validationErrors.map( (currError) => {
-						return <p>{currError}</p>
+						return <p key={`error-${count++}`}>{currError}</p>
 					})}
 				</div>
 			)}
-			{/* <form onSubmit={handleSubmit}>
-				<input type={"file"} name={'song'}></input>
-				<input type='text' placeholder='Image URL' value={imageUrl} onChange={updateImageUrl} />
-				<input type='text' placeholder='Album' value={album} onChange={updateAlbum} />
-				<input type='text' placeholder='title' value={title} onChange={updateTitle}/>
-				<input type={"submit"}></input>
-			</form> */}
-			{/* <form action='/songs' method='post' encType='multipart/form-data'> */}
-			<form onSubmit={handleSubmit}>
+			<form className="uploadSongForm"onSubmit={handleSubmit}>
 			<input type="file" id='fileInput' name="filetoupload" onChange={updateSongUrl}></input>
-			{/* <input type="file" name="filetoupload" onChange={updateImageUrl}></input> */}
-			<input type='text' id='titleInput' placeholder='title' value={title} onChange={updateTitle}/>
-			{/* <input type='text' placeholder='album' value={album} onChange={updateAlbum}/> */}
-
+			<input type='textarea' id='titleInput' placeholder='title' value={title} onChange={updateTitle}/>
 			<input id="submit" type={"submit"}></input>
 			</form>
 

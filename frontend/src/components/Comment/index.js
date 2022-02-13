@@ -1,15 +1,20 @@
 import { useDispatch, useSelector } from 'react-redux';
-import {useState} from 'react'
+import {useState,useEffect} from 'react'
 import { deleteComment } from '../../store/comment';
 import EditCommentForm from '../EditCommentForm';
 function Comment ({comment}){
     const sessionUser = useSelector(state => state.session.user);
-    const [editCommentButtonText,setEditCommentButtonText] = useState("Edit Comment")
+    const [editCommentButtonText,setEditCommentButtonText] = useState("Edit")
     const [showEditCommentForm,setShowEditCommentForm] = useState(false);
     let content = null;
     if(showEditCommentForm && comment.userId === sessionUser.id){
         content = <EditCommentForm comment={comment} hideForm={() => setShowEditCommentForm(false)}></EditCommentForm>
     }
+
+    useEffect(()=> {
+      showEditCommentForm ? setEditCommentButtonText("Cancel") : setEditCommentButtonText("Edit")
+    },[showEditCommentForm])
+
     const toggleEditCommentForm = async(e)=> {
         setShowEditCommentForm(!showEditCommentForm);
       }

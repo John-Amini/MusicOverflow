@@ -20,6 +20,9 @@ function Song (params) {
         !showPostCommentForm ? setShowPostCommentFormText("Cancel Comment") : setShowPostCommentFormText("Post Comment")
     }
 
+    useEffect(() => {
+      showEditForm ? setShowEditText("Cancel") : setShowEditText("Edit");
+    },[showEditForm])
     const handleDelete = async (e) => {
         e.preventDefault();
         await dispatch(deleteSong(song.id));
@@ -51,10 +54,10 @@ function Song (params) {
             <div>{song.title} </div>
             <div>Uploader:{song.User?.username} </div>
 
-            {   song.userId === sessionUser.id &&
+            {   song.userId === sessionUser?.id &&
                 <button onClick={handleDelete}>Delete</button>
             }
-            {   song.userId === sessionUser.id &&
+            {   song.userId === sessionUser?.id &&
                 <div>
                     <button onClick={toggleEditForm}>{editButtonText}</button>
                     {content}

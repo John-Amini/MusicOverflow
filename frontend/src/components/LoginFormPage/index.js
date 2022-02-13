@@ -18,8 +18,18 @@ function LoginFormPage() {
     <Redirect to="/" />
   );
   }
-
+  const handleDemoUser = (e) => {
+    console.log("handle Demo user")
+    e.preventDefault()
+    setErrors([]);
+    return dispatch(sessionActions.login({ credential:'Demo-lition',password:'password' }))
+      .catch(async (res) => {
+        const data = await res.json();
+        if (data && data.errors) setErrors(data.errors);
+      });
+  }
   const handleSubmit = (e) => {
+    console.log("sign in normally")
     e.preventDefault();
     setErrors([]);
     return dispatch(sessionActions.login({ credential, password }))
@@ -30,30 +40,38 @@ function LoginFormPage() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <ul>
+    <div className='loginFormContainer'>
+      <div className='formContainer'>
+    <form className='loginForm' onSubmit={handleSubmit}>
+      <ul className='ulErrors'>
         {errors.map((error, idx) => <li key={idx}>{error}</li>)}
       </ul>
       <label>
         Username or Email
         <input
+        className='loginInput'
           type="text"
           value={credential}
           onChange={(e) => setCredential(e.target.value)}
           required
+          placeholder='Username or Email'
         />
       </label>
       <label>
         Password
-        <input
+        <input className='loginInput'
           type="password"
           value={password}
+          placeholder='Password'
           onChange={(e) => setPassword(e.target.value)}
           required
         />
       </label>
-      <button type="submit">Log In</button>
+      <button className='loginSubmit' type="submit">Log In</button>
+      <button className='loginSubmit' onClick={handleDemoUser}>Demo User</button>
     </form>
+    </div>
+    </div>
   );
 }
 

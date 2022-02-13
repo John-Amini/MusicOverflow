@@ -1,0 +1,36 @@
+
+img {
+    max-width: 100%;
+    max-height: 100%;
+}
+html{
+    margin: 0px;
+}
+.navigationContainerContainer{
+    background-size: contain;
+    margin-left: 90px;
+    margin-right: 90px;
+}
+.navigationContainer{
+    margin-left: 90px;
+    margin-right: 90px;
+    background-size: contain;
+    margin-top: 0px;
+}
+.navigation{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    height: 50px;
+}
+
+.navigation > li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.profileUploadContainer {
+    display: flex;
+    justify-content: center;
+}

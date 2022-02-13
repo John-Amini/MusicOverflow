@@ -14,6 +14,7 @@ router.get('/songs/:id',asyncHandler(async (req,res,next)=>{
     console.log("Get COMMENTS FROM SERVer")
     console.log(id)
     const comments = await Comment.findAll({
+        order: [['createdAt', 'DESC']],
         where:{
             songId:id
         },

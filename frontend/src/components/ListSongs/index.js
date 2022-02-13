@@ -10,7 +10,6 @@ function ListSongs() {
     <>
       <ul>
         {
-          sessionUser &&
           songs &&
           songs.map(song => {
             // console.log(song)
