@@ -57,7 +57,7 @@ await form.parse(req, async function(err,fields,files) {
         errors.push('You provided a song title that you have already uploaded.')
         errorFlag = true;
     }
-    if(!checkSpecialCharacters(fields.title)){
+    if(await checkSpecialCharacters(fields.title)){
         errors.push("Special Characters are not allowed");
         errorFlag = true;
     }
