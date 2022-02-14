@@ -72,6 +72,7 @@ function Song (params) {
             }
             </div>
         <ReactAudioPlayer
+        className="audioPlayer"
         src={song.songUrl}
         controls></ReactAudioPlayer>
         <button  className='showCommentsButt showComments'onClick={toggleComments}>{showCommentsText}</button>

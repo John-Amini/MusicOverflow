@@ -3,6 +3,8 @@
     margin-top: 5px;
     margin-bottom: 5px;
     justify-content: space-between;
+    border-bottom: black solid 1px;
+    padding-bottom: 7px;
 }
 
 .deleteCommentButton{
@@ -18,10 +20,7 @@
 .commentDetails{
     display: flex;
     flex-direction: column;
-}
-.commentBody{
-    margin-left: 100px;
-    width: 100px;
+    width: 300px;
 }
 
 .editCommentFormDiv{
