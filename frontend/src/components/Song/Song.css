@@ -1,0 +1,48 @@
+.songContainer{
+    justify-content: center;
+    padding: 25px;
+}
+.innerSongContainer{
+    display: flex;
+}
+.songDetailsContainer{
+    position: relative;
+    display: grid;
+    width: 100px;
+    word-wrap: break-word;
+    margin-right: 100px;
+    font-weight: bolder;
+}
+
+.songDetailsContainer{
+    grid-template-columns: 2fr 1fr;
+}
+ .songDelete{
+     width: 60px;
+     height: 35px;
+ }
+ .songEditButton{
+     width: 60px;
+     height: 35px;
+     margin-bottom: 5px;
+ }
+ .opaque{
+     opacity: 0;
+     width: 0px;
+     height: 0px;
+ }
+
+ .songTitle{
+     margin-right: 10px;
+     width: 100px;
+     margin-bottom: 10px;
+ }
+
+ .showCommentsButt{
+     height:40px
+ }
+
+ .postCommentButt{
+     height: 40px;
+     margin-left: 10px;
+ }

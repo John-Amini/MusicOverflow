@@ -1,0 +1,13 @@
+.addCommentContainer{
+    display: flex;
+    justify-content: center;
+}
+
+.addCommentInput{
+    border-radius: 15px;
+}
+
+.submitComment{
+    border-radius: 15px;
+
+}

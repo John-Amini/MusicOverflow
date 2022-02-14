@@ -1,0 +1,19 @@
+.editSongForm{
+    margin-top: 0;
+    padding-top: 0px;
+    position: relative;
+    border-radius: 25px;
+}
+
+.updateSongBtn{
+    border-radius: 30px;
+}
+
+.newTitleInput{
+    border-radius: 6px;
+	background: none;
+    height: 30px;
+}
+.errorsContainerSongEdit{
+    color: red;
+}

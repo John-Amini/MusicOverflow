@@ -4,3 +4,23 @@ body{
     margin-top: 0px;
     padding-top:0px ;
 }
+
+.delete{
+    border: black solid 1px;
+    background-color: red;
+    border-radius: 25px;
+}
+
+.edit{
+    border: black solid 1px;
+    background-color: #0cbaba;
+    border-radius: 25px;
+    color: #380036;
+}
+
+.showComments{
+    background-color: #380036;
+    border: black solid 1px;
+    border-radius: 25px;
+    color:#0cbaba
+}

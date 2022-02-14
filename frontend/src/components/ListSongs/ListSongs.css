@@ -1,0 +1,17 @@
+.songsListContainer{
+    display: flex;
+    justify-content:center;
+    /* background: linear-gradient(90deg,#380036,#0cbabb); */
+    width: 60%;
+    margin: 0 auto;
+    background-color: lightgrey;
+    padding: 0px;
+    border-radius: 25px;
+    margin-top: 50px;
+}
+
+.songsList{
+    padding: 0;
+    width: 100%;
+    padding-left: 100px;
+}

@@ -10,16 +10,25 @@ function Navigation({ isLoaded }){
   if (sessionUser) {
     sessionLinks = (
       <div className='profileUploadContainer'>
-      <ProfileButton user={sessionUser} />
-      <NavLink to="/upload">Upload</NavLink>
+        <div className='uploadDiv'>
+      <NavLink className='upload button' to="/upload">Upload</NavLink>
+        </div>
+        <div className='profileButtonContainer'>
+      <ProfileButton className='profileButton' user={sessionUser} />
+      </div>
+
       </div>
     );
   } else {
     sessionLinks = (
-      <>
-        <NavLink to="/login">Log In</NavLink>
-        <NavLink to="/signup">Sign Up</NavLink>
-      </>
+      <div className='loginSignupContainer'>
+        {/* <div className='loginButton'> */}
+        <NavLink className='loginText button' to="/login">Log In</NavLink>
+      {/* </div> */}
+      {/* <div className='signupButton'> */}
+        <NavLink className={'signupText button'} to="/signup">Sign Up</NavLink>
+        {/* </div> */}
+      </div>
     );
   }
 
@@ -28,7 +37,7 @@ function Navigation({ isLoaded }){
     <div className='navigationContainer'>
     <ul className='navigation'>
       <li>
-        <NavLink exact to="/">Home</NavLink>
+        <NavLink className='homeButton button' exact to="/">Home</NavLink>
         {isLoaded && sessionLinks}
       </li>
     </ul>

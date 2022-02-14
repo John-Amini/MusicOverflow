@@ -5,6 +5,7 @@ import ReactAudioPlayer from "react-audio-player";
 import EditSongForm from "../EditSongForm";
 import ListComments from "../ListComments";
 import AddCommentForm from "../AddCommentForm";
+import './Song.css'
 function Song (params) {
     const sessionUser = useSelector(state => state.session.user);
     const [showEditForm, setShowEditForm] = useState(false);
@@ -21,7 +22,7 @@ function Song (params) {
     }
 
     useEffect(() => {
-      showEditForm ? setShowEditText("Cancel") : setShowEditText("Edit");
+      showEditForm ? setShowEditText("Cancel Edit") : setShowEditText("Edit");
     },[showEditForm])
     const handleDelete = async (e) => {
         e.preventDefault();
@@ -50,26 +51,34 @@ function Song (params) {
         postComment = <AddCommentForm song={song} hideForm={toggleAddCommentForm} showComments={setShowComments}></AddCommentForm>
       }
     return (
-        <div>
-            <div>{song.title} </div>
+        <div className="songContainer">
+          <div className="innerSongContainer">
+          <div className="songDetailsContainer">
+            <div className='songTitle'>{song.title} </div>
+            {   song.userId === sessionUser?.id &&
+                <button className='songDelete delete' onClick={handleDelete}>Delete</button>
+            }
+             {   song.userId !== sessionUser?.id &&
+                <button disabled={true} className='songDelete opaque'>Delete</button>
+            }
             <div>Uploader:{song.User?.username} </div>
 
-            {   song.userId === sessionUser?.id &&
-                <button onClick={handleDelete}>Delete</button>
-            }
+
             {   song.userId === sessionUser?.id &&
                 <div>
-                    <button onClick={toggleEditForm}>{editButtonText}</button>
+                    <button className="songEditButton edit" onClick={toggleEditForm}>{editButtonText}</button>
                     {content}
                 </div>
             }
+            </div>
         <ReactAudioPlayer
         src={song.songUrl}
         controls></ReactAudioPlayer>
-        <button onClick={toggleComments}>{showCommentsText}</button>
+        <button  className='showCommentsButt showComments'onClick={toggleComments}>{showCommentsText}</button>
         {sessionUser &&
-        <button onClick={toggleAddCommentForm}>{showPostCommentFormText}</button>
+        <button className='postCommentButt edit'onClick={toggleAddCommentForm}>{showPostCommentFormText}</button>
         }
+        </div>
         {sessionUser && postComment}
         <div className="commentsContainer">
             {commentContent}

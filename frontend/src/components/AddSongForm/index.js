@@ -20,10 +20,13 @@ const AddSongForm = ({ }) => {
 	const updateSongUrl = (e) => setSongUrl(e.target.files[0])
 	useEffect(()=>{
 		const button = document.getElementById("submit")
-		if(title === "" || songUrl === null)
+		if(title === "" || songUrl === null){
 			button.disabled = true;
+			button.style.opacity = .4;
+		}
 		else{
 			button.disabled = false;
+			button.style.opacity = 1;
 		}
 	},[title,songUrl])
 	const handleSubmit = async (e) => {
@@ -49,7 +52,6 @@ const AddSongForm = ({ }) => {
 					if(createdSong.errors[currErr] === "You provided a song title that you have already uploaded."){
 						setTitle("")
 					}
-
 					errors.push(`${createdSong.errors[currErr]}`)
 				}
 				button.disabled = false;
@@ -65,7 +67,10 @@ const AddSongForm = ({ }) => {
 	};
 	let count = 0
 	return (
-		<section className='addSongFormSection'>
+		<section className='loginFormContainer'>
+			<div className='formContainerAddSong'>
+
+			<form className="loginForm"onSubmit={handleSubmit}>
 			{validationErrors.length > 0 && (
 				<div className='errorsContainer'>
 					{validationErrors.map( (currError) => {
@@ -73,12 +78,14 @@ const AddSongForm = ({ }) => {
 					})}
 				</div>
 			)}
-			<form className="uploadSongForm"onSubmit={handleSubmit}>
-			<input type="file" id='fileInput' name="filetoupload" onChange={updateSongUrl}></input>
-			<input type='textarea' id='titleInput' placeholder='title' value={title} onChange={updateTitle}/>
-			<input id="submit" type={"submit"}></input>
+			<input type="file" id='fileInput'  name="filetoupload" onChange={updateSongUrl}></input>
+			<label className='titleInputLabel'>
+				Title
+			<input type='textarea' className="loginInput" id='titleInput' placeholder='Title' value={title} onChange={updateTitle}/>
+			</label>
+			<input id="submit" className='loginSubmit songSubmit' type={"submit"}></input>
 			</form>
-
+			</div>
 		</section>
 	);
 };

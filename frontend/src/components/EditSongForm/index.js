@@ -1,16 +1,22 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { editSong } from '../../store/song';
-
+import { editSong, loadSongs } from '../../store/song';
+import './EditSongForm.css'
 const EditSongForm = ({ song, hideForm }) => {
     const sessionUser = useSelector(state => state.session.user);
     const dispatch = useDispatch();
     const [newTitle,setNewTitle] = useState(song.title);
     const updateNewTitle = (e) => setNewTitle(e.target.value);
+	  const [validationErrors,setValidationErrors] = useState([]);
 
+
+    async function checkSpecialCharacters(title){
+      const specialChars = /[`!@#$%^&*_+\-=\[\]{};:"\\|,.<>\/?~]/;
+      return specialChars.test(title);
+  }
     useEffect(()=> {
       let submitBut = document.getElementById(`updateSong${song.id}`)
-      if(newTitle === song.title || newTitle === ''){
+      if(newTitle === song.title || newTitle === '' || newTitle.length > 55){
         submitBut.disabled = true
       } else{
         submitBut.disabled = false;
@@ -18,6 +24,16 @@ const EditSongForm = ({ song, hideForm }) => {
     },[newTitle])
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if(checkSpecialCharacters(newTitle)){
+      console.log("SPECIAL CHARACTER ALERT")
+      let errors = [];
+      errors.push("No special characters allowed")
+      setValidationErrors(errors);
+    }
+    else{
+      return
+
     const payload = {
       song,
       newTitle,
@@ -25,23 +41,33 @@ const EditSongForm = ({ song, hideForm }) => {
     // console.log(payload)
     // console.log(payload.newTitle)
     await dispatch(editSong(payload))
+    await dispatch(loadSongs())
     hideForm();
+  }
   };
 
   // const handleCancelClick = (e) => {
   //   e.preventDefault();
   //   hideForm();
   // };
-
+  let count = 0;
   return (
-    <section >
-      <form onSubmit={handleSubmit}>
+    <section  >
+      <form className='editSongForm' onSubmit={handleSubmit}>
+      {validationErrors.length > 0 && (
+				<div className='errorsContainerSongEdit'>
+					{validationErrors.map( (currError) => {
+						return <p key={`error-${count++}`}>{currError}</p>
+					})}
+				</div>
+			)}
         <input
-          type="text"
+          className='newTitleInput'
+          type="textarea"
           placeholder="New Title"
           value={newTitle}
           onChange={updateNewTitle} />
-        <button id={`updateSong${song.id}`}type="submit">Update Song</button>
+        <button className='updateSongBtn' id={`updateSong${song.id}`}type="submit">Update Song</button>
         {/* <button type="button" onClick={handleCancelClick}>Cancel</button> */}
       </form>
     </section>

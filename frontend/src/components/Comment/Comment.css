@@ -1,0 +1,30 @@
+.commentContainer{
+    display: flex;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    justify-content: space-between;
+}
+
+.deleteCommentButton{
+    height: 35px;
+    width: 100px;
+}
+
+.editCommentButton{
+    height: 35px;
+    width: 100px;
+}
+
+.commentDetails{
+    display: flex;
+    flex-direction: column;
+}
+.commentBody{
+    margin-left: 100px;
+    width: 100px;
+}
+
+.editCommentFormDiv{
+    width: 100px;
+    display: flex;
+}

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { addSong, loadSongs } from '../../store/song';
 import {createComment} from '../../store/comment'
+import './CommentForm.css'
 const AddCommentForm = ({ song,hideForm,showComments }) => {
 	const sessionUser = useSelector(state => state.session.user);
 	const dispatch = useDispatch();
@@ -31,22 +32,10 @@ const AddCommentForm = ({ song,hideForm,showComments }) => {
 			showComments(true);
 			const createdComment = await dispatch(createComment(content,song.id,sessionUser.username))
 			console.log(createdComment);
-			// if(createdSong.errors){
-			// 	for(let currErr in createdSong.errors){
-			// 		errors.push(`${currErr} ${createdSong.errors[currErr]}`)
-			// 	}
-			// 	commentInput.disabled = false;
-			// 	setValidationErrors(errors);
-			// 	setContent("")
-			// } else if (createdSong){
-			// 	//need to move to added songs location
-			// 	await history.push(`/`);
-			// 	// await dispatch(loadSongs());
-			// }
 	};
 
 	return (
-		<section>
+		<section className='addCommentContainer'>
 			{validationErrors.length > 0 && (
 				<div className='errorsContainer'>
 					{validationErrors.map( (currError) => {
@@ -55,8 +44,8 @@ const AddCommentForm = ({ song,hideForm,showComments }) => {
 				</div>
 			)}
 			<form onSubmit={handleSubmit}>
-			<input type='text' id={`commentInput${song.id}`} placeholder='Comment' value={content} onChange={updateContent}/>
-			<input id={`submit${song.id}`} type={"submit"}></input>
+			<input className='addCommentInput' type='text' id={`commentInput${song.id}`} placeholder='Comment' value={content} onChange={updateContent}/>
+			<input className='submitComment' id={`submit${song.id}`} type={"submit"}></input>
 			</form>
 
 		</section>

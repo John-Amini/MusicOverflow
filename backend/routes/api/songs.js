@@ -34,6 +34,11 @@ async function checkIfExists(userId,title){
     if(song.length === 0) return false;
     return true;
 }
+async function checkSpecialCharacters(title){
+    const specialChars = /[`!@#$%^&*_+\-=\[\]{};:"\\|,.<>\/?~]/;
+    console.log("title");
+    return specialChars.test(title);
+}
 router.post('/',requireAuth,asyncHandler(async (req,res,next) => {
 //adding song here
 let errors = [];
@@ -50,6 +55,10 @@ await form.parse(req, async function(err,fields,files) {
         // err.title = 'Same song same user';
         // err.errors = ['You provided a song title that you have already uploaded.'];
         errors.push('You provided a song title that you have already uploaded.')
+        errorFlag = true;
+    }
+    if(!checkSpecialCharacters(fields.title)){
+        errors.push("Special Characters are not allowed");
         errorFlag = true;
     }
     if(fields.title.length >=255){
@@ -189,6 +198,7 @@ function convertAt(email){
 
 function createExpectedUrl (email,title){
     let str = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/${email}/${title}/${title}.mp3`
+    str= str.replace(' ','+');
     return str
 }
 module.exports = router;

@@ -1,0 +1,14 @@
+.commentsListContainer{
+    display: flex;
+    justify-content: left;
+    margin-top: 10px;
+}
+
+.commentsUl{
+    display: flex;
+    flex-direction: column;
+    border: #0cbaba 1px solid;
+    width: 780px;
+    border-radius: 15px;
+    padding-right: 15px;
+}

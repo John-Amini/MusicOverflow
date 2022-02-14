@@ -4,6 +4,7 @@ import Song from "../Song";
 import Comment from "../Comment";
 import { useState,useEffect } from "react";
 import { loadComments } from "../../store/comment";
+import './ListComments.css';
 function ListComments({song}) {
   const sessionUser = useSelector(state => state.session.user);
   const comments = useSelector(state => state.comment);
@@ -18,8 +19,8 @@ function ListComments({song}) {
         setIsLoading(false)
     },[])
   return (
-    <>
-      <ul>
+    <div className="commentsListContainer">
+      <ul className="commentsUl">
         {
           Object.keys(comments).length !== 0 &&
           comments[song.id]?.map(comment => {
@@ -29,7 +30,7 @@ function ListComments({song}) {
         }
         {!comments[song.id] && !isLoading && <div>No comments</div>}
       </ul>
-    </>
+    </div>
   )
 }
 

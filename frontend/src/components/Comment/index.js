@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {useState,useEffect} from 'react'
 import { deleteComment } from '../../store/comment';
 import EditCommentForm from '../EditCommentForm';
+import './Comment.css'
 function Comment ({comment}){
     const sessionUser = useSelector(state => state.session.user);
     const [editCommentButtonText,setEditCommentButtonText] = useState("Edit")
@@ -24,19 +25,22 @@ function Comment ({comment}){
         e.preventDefault();
         await dispatch(deleteComment(comment.id));
       }
-    return (<div>
-        {comment.body}
-        {comment.User.username}
+    return (
+    <div className='commentContainer'>
+      <div className='commentDetails'>
+        <div className='commentBody'>{comment.body}</div>
+        <div>Poster:{comment.User.username}</div>
+        </div>
         {sessionUser
         && sessionUser.id === comment.userId
-        &&<div>
-        <button onClick={toggleEditCommentForm}>{editCommentButtonText}</button>
+        &&<div className='editCommentFormDiv'>
+        <button className='editCommentButton edit' onClick={toggleEditCommentForm}>{editCommentButtonText}</button>
         {content}
         </div>
         }
         {sessionUser
         && sessionUser.id === comment.userId
-        && <button onClick={handleDelete}>Delete Comment</button>
+        && <button className='deleteCommentButton delete' onClick={handleDelete}>Delete Comment</button>
         }
     </div>)
 }

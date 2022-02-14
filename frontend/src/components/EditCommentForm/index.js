@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { editComment } from '../../store/comment';
-
+import './EditComment.css'
 const EditCommentForm = ({ comment, hideForm }) => {
     const sessionUser = useSelector(state => state.session.user);
     const dispatch = useDispatch();
@@ -33,6 +33,7 @@ const EditCommentForm = ({ comment, hideForm }) => {
     <section >
       <form onSubmit={handleSubmit}>
         <input
+        className='editCommentInput'
           type="text"
           placeholder="Update Comment"
           value={newContent}

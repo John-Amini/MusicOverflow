@@ -7,31 +7,56 @@
 } */
 
 .addSongFormSection{
-    display: block;
-    text-align: center;
-    margin-top: 50px;
+  display: block;
+  text-align: center;
+  margin-top: 50px;
 
 }
-.uploadSongForm{
-     min-height: 100%;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 1px 1px 10px rgba(151, 151, 151, 0.6);
-    border-radius: 5px;
-    width: 50em;
-    padding: 10px;
-    margin: 0 auto ;
-}
+
 
 input[type=file]::file-selector-button {
-  border: 2px solid #6c5ce7;
-  padding: .2em .4em;
-  border-radius: .2em;
-  background-color: #a29bfe;
-  transition: 1s;
+border: 2px solid #6c5ce7;
+padding: .2em .4em;
+border-radius: .2em;
+background-color: #a29bfe;
+transition: 1s;
+border-radius: 100px;
 }
 
 input[type=file]::file-selector-button:hover {
-  background-color: #81ecec;
-  border: 2px solid #00cec9;
+background-color: #81ecec;
+border: 2px solid #00cec9;
+}
+
+.formContainerAddSong {
+background-color: white;
+position: relative;
+height: 360px;
+width: 600px;
+  box-shadow: 1px 1px 10px rgba(151, 151, 151, 0.6);
+  border-radius: 25px;
+}
+
+#fileInput
+{
+width: 550px;
+margin-bottom: 15px;
+}
+
+.titleInputLabel{
+margin-right: 90px;
+}
+
+#titleInput {
+width: 510px;
+}
+
+.songSubmit{
+margin-left: 110px;
+}
+
+.errorsContainer{
+color: red;
+position: absolute;
+top: 45px;
 }
