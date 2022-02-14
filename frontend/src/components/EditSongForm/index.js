@@ -25,14 +25,13 @@ const EditSongForm = ({ song, hideForm }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if(checkSpecialCharacters(newTitle)){
+    if(!checkSpecialCharacters(newTitle)){
       console.log("SPECIAL CHARACTER ALERT")
       let errors = [];
       errors.push("No special characters allowed")
       setValidationErrors(errors);
     }
     else{
-      return
 
     const payload = {
       song,

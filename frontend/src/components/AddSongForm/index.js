@@ -67,7 +67,7 @@ const AddSongForm = ({ }) => {
 	};
 	let count = 0
 	return (
-		<section className='loginFormContainer'>
+		<section className='loginFormContainer uploadContainer'>
 			<div className='formContainerAddSong'>
 
 			<form className="loginForm"onSubmit={handleSubmit}>
