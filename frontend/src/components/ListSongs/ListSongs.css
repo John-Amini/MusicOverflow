@@ -14,4 +14,5 @@
     padding: 0;
     width: 100%;
     padding-left: 100px;
+    height: min-content !important;
 }

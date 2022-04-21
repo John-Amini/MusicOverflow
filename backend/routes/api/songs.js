@@ -127,7 +127,7 @@ await song.destroy();
 let key = buildKeyForAws(req.user.dataValues,song)
 const params = {
     Bucket: process.env.AWS_BUCKET_NAME,
-    Key: key,
+    Key: key
 }
 await s3.deleteObject(params, function(err, data) {
     if (err) console.log(err, err.stack);  // error

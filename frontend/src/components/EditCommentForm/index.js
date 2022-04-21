@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { editComment } from '../../store/comment';
 import './EditComment.css'
-const EditCommentForm = ({ comment, hideForm }) => {
+const EditCommentForm = ({ comment, hideForm , userComments,test,setTest }) => {
     const sessionUser = useSelector(state => state.session.user);
     const dispatch = useDispatch();
 
@@ -22,6 +22,9 @@ const EditCommentForm = ({ comment, hideForm }) => {
     // console.log(payload.newTitle)
     await dispatch(editComment(comment,newContent))
     hideForm();
+    let index = userComments.filter((currComment) => currComment.id === comment.id)
+    userComments.splice(index,1);
+    setTest(!test)
   };
 
 //   const handleCancelClick = (e) => {

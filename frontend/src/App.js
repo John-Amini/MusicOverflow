@@ -8,6 +8,7 @@ import Navigation from "./components/Navigation";
 import AddSongForm from "./components/AddSongForm";
 import ListSongs from "./components/ListSongs";
 import { loadSongs } from "./store/song";
+import UserPage from "./components/userPage";
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -30,7 +31,15 @@ function App() {
           <Route path="/upload">
               <AddSongForm></AddSongForm>
             </Route>
-        <ListSongs></ListSongs>
+            <Route path= '/users/:id'>
+              <UserPage></UserPage>
+            </Route>
+            <Route exact path='/'>
+            <ListSongs></ListSongs>
+            </Route>
+            <Route>
+                <h1>404 Not Found</h1>
+              </Route>
         </Switch>
       )}
     </>

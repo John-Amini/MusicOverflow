@@ -2,7 +2,7 @@ const express = require('express')
 const asyncHandler = require('express-async-handler');
 
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { User } = require('../../db/models');
+const { User , Song , Comment } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
@@ -42,5 +42,31 @@ router.post(
       });
     }),
   );
+  router.get('/:id',asyncHandler(async (req,res)=> {
+      let id = req.params.id;
+      id = +id;
+      console.log("getting all user info")
+      let user = await User.findByPk(id);
+      if(!user){
+        return res.json({error:"does not exist"})
+      }
+      const songs = await Song.findAll({
+        where: { userId: id } ,
+        order: [['createdAt', 'DESC']],
+        include:{
+            model: User
+                }});
 
+      const comments = await Comment.findAll({
+        where:{userId:id},
+        include : {
+          model: Song
+        } ,
+        include: {
+          model:User
+      }
+      })
+                return res.json({songs,comments})
+              })
+  )
 module.exports = router;

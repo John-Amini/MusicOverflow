@@ -1,4 +1,5 @@
 .editCommentInput{
     word-break:keep-all;
     height: 50px;
+    z-index: 3;
 }
