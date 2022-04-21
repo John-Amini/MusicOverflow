@@ -3,13 +3,14 @@ import {useState,useEffect} from 'react'
 import { deleteComment } from '../../store/comment';
 import EditCommentForm from '../EditCommentForm';
 import './Comment.css'
-function Comment ({comment}){
+import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+function Comment ({comment,userComments,setTest,test}){
     const sessionUser = useSelector(state => state.session.user);
     const [editCommentButtonText,setEditCommentButtonText] = useState("Edit")
     const [showEditCommentForm,setShowEditCommentForm] = useState(false);
     let content = null;
     if(showEditCommentForm && comment.userId === sessionUser.id){
-        content = <EditCommentForm comment={comment} hideForm={() => setShowEditCommentForm(false)}></EditCommentForm>
+        content = <EditCommentForm comment={comment} userComments={userComments} test={test} setTest={setTest} hideForm={() => setShowEditCommentForm(false)}></EditCommentForm>
     }
 
     useEffect(()=> {
@@ -24,12 +25,18 @@ function Comment ({comment}){
     const handleDelete = async (e) => {
         e.preventDefault();
         await dispatch(deleteComment(comment.id));
+        if(userComments){
+          let index = userComments.findIndex((currComment) => currComment.id === comment.id);
+          let removed = userComments.splice(index,1)
+          setTest(!test)
+          console.log(removed)
+        }
       }
     return (
     <div className='commentContainer'>
       <div className='commentDetails'>
         <div className='commentBody'>{comment.body}</div>
-        <div>Poster:{comment.User.username}</div>
+        <div>Poster:<Link to={`/users/${comment.userId}`}>{comment.User.username}</Link></div>
         </div>
         {sessionUser
         && sessionUser.id === comment.userId

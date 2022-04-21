@@ -1,0 +1,54 @@
+.userContainer{
+    display: flex;
+    justify-content: space-evenly;
+
+}
+.leftSide .songsList{
+    height: 640px !important;
+}
+.leftSide{
+    display: flex;
+    justify-content:center;
+    /* background: linear-gradient(90deg,#380036,#0cbabb); */
+    width: 45%;
+    background-color: lightgrey;
+    padding: 0px;
+    border-radius: 25px;
+    margin-top: 50px;
+    height: 640px !important;
+    overflow-y: scroll;
+    align-items: center;
+    flex-direction:column;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+.rightSide::-webkit-scrollbar ,.leftSide::-webkit-scrollbar{
+    display: none;
+}
+.rightSide{
+    display: flex;
+    justify-content:center;
+    /* background: linear-gradient(90deg,#380036,#0cbabb); */
+    width: 45%;
+    background-color: lightgrey;
+
+    border-radius: 25px;
+    margin-top: 50px;
+    height: 640px;
+    overflow-y: scroll;
+    align-items: center;
+    flex-direction:column;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+.rightSide .commentContainer{
+    padding-top: 40px;
+}
+
+.userCommentList{
+    height: 640px !important
+}
+
+.title{
+    padding-top: 38px;
+}

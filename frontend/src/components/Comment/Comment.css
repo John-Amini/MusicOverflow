@@ -26,4 +26,5 @@
 .editCommentFormDiv{
     width: 100px;
     display: flex;
+    z-index: 1;
 }

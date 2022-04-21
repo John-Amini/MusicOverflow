@@ -6,6 +6,7 @@ import EditSongForm from "../EditSongForm";
 import ListComments from "../ListComments";
 import AddCommentForm from "../AddCommentForm";
 import './Song.css'
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 function Song (params) {
     const sessionUser = useSelector(state => state.session.user);
     const [showEditForm, setShowEditForm] = useState(false);
@@ -15,6 +16,7 @@ function Song (params) {
     const  [showComments,setShowComments] = useState(false);
     const [showCommentsText,setShowCommentsText] = useState("Show Comments");
     const song = params.song;
+    const parent = params.parent
     const dispatch = useDispatch();
     const toggleAddCommentForm = async(e) => {
         setShowPostCommentForm(!showPostCommentForm)
@@ -61,7 +63,7 @@ function Song (params) {
              {   song.userId !== sessionUser?.id &&
                 <button disabled={true} className='songDelete opaque'>Delete</button>
             }
-            <div>Uploader:{song.User?.username} </div>
+            <div>Uploader:<Link to={`/users/${song.userId}`}>{song.User?.username} </Link></div>
 
 
             {   song.userId === sessionUser?.id &&
@@ -75,8 +77,10 @@ function Song (params) {
         className="audioPlayer"
         src={song.songUrl}
         controls></ReactAudioPlayer>
+        { !parent &&
         <button  className='showCommentsButt showComments'onClick={toggleComments}>{showCommentsText}</button>
-        {sessionUser &&
+        }
+        {sessionUser && !parent &&
         <button className='postCommentButt edit'onClick={toggleAddCommentForm}>{showPostCommentFormText}</button>
         }
         </div>
