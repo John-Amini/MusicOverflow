@@ -30,6 +30,7 @@ function App() {
           <Route path="/upload">
               <AddSongForm></AddSongForm>
             </Route>
+            <Route exact path= '/users/:id'></Route>
         <ListSongs></ListSongs>
         </Switch>
       )}

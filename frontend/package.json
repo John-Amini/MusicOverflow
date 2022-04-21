@@ -13,7 +13,7 @@
     "npm": "^8.5.0",
     "react-audio-player": "^0.17.0",
     "react-dom": "^17.0.2",
-    "react-h5-audio-player": "^3.8.2",
+    "react-h5-audio-player": "^3.8.4",
     "react-player": "^2.9.0",
     "react-redux": "^7.2.6",
     "react-router-dom": "^5.3.0",
@@ -45,5 +45,5 @@
   "devDependencies": {
     "redux-logger": "^3.0.6"
   },
-  "proxy": "http://localhost:5002"
+  "proxy": "http://localhost:5003"
 }
