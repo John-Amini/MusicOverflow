@@ -9,6 +9,7 @@ import AddSongForm from "./components/AddSongForm";
 import ListSongs from "./components/ListSongs";
 import { loadSongs } from "./store/song";
 import UserPage from "./components/userPage";
+import Footer from "./components/footer"
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -36,10 +37,13 @@ function App() {
             </Route>
             <Route exact path='/'>
             <ListSongs></ListSongs>
+            <Footer></Footer>
+
             </Route>
             <Route>
                 <h1>404 Not Found</h1>
               </Route>
+
         </Switch>
       )}
     </>
