@@ -25,15 +25,19 @@ function App() {
         <Switch>
           <Route path="/login">
             <LoginFormPage />
+            <Footer></Footer>
           </Route>
           <Route path="/signup">
             <SignupFormPage />
+            <Footer></Footer>
           </Route>
           <Route path="/upload">
               <AddSongForm></AddSongForm>
+              <Footer></Footer>
             </Route>
             <Route path= '/users/:id'>
               <UserPage></UserPage>
+              <Footer></Footer>
             </Route>
             <Route exact path='/'>
             <ListSongs></ListSongs>
