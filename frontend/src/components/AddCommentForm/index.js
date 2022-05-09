@@ -31,7 +31,6 @@ const AddCommentForm = ({ song,hideForm,showComments }) => {
 			hideForm();
 			showComments(true);
 			const createdComment = await dispatch(createComment(content,song.id,sessionUser.username))
-			console.log(createdComment);
 	};
 
 	return (

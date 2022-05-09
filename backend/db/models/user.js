@@ -70,7 +70,6 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     });
-    console.log(testUser)
     const user = await User.scope('loginUser').findOne({
       where: {
         [Op.or]: {

@@ -29,7 +29,6 @@ function Comment ({comment,userComments,setTest,test}){
           let index = userComments.findIndex((currComment) => currComment.id === comment.id);
           let removed = userComments.splice(index,1)
           setTest(!test)
-          console.log(removed)
         }
       }
     return (

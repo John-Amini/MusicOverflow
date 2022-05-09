@@ -15,7 +15,6 @@ const song = require('../../db/models/song');
       })
 router.get('/',asyncHandler(async (req, res) => {
     //hit get songs
-    console.log("hit get songs");
     const songs = await Song.findAll({
         order: [['createdAt', 'DESC']],
         include:{
@@ -36,19 +35,15 @@ async function checkIfExists(userId,title){
 }
 async function checkSpecialCharacters(title){
     const specialChars = /[`!@#$%^&*_+\-=\[\]{};:"\\|,.<>\/?~]/;
-    console.log("title");
     return specialChars.test(title);
 }
 router.post('/',requireAuth,asyncHandler(async (req,res,next) => {
 //adding song here
 let errors = [];
 let errorFlag = false
-console.log("hit add song")
 var form = new formidable.IncomingForm();
 await form.parse(req, async function(err,fields,files) {
-    console.log(fields)
     let exists = await checkIfExists(req.user.dataValues.id,fields.title)
-    console.log(exists)
     if(exists){
         // const err = new Error('Same song same user');
         // err.status = 403;
@@ -73,7 +68,6 @@ await form.parse(req, async function(err,fields,files) {
         errors.push("The file you have sent is not a proper audio file");
         errorFlag = true;
     }
-    console.log(files.song)
     if(errorFlag){
         const err = new Error('Upload problem');
         err.status = 403;
@@ -91,9 +85,7 @@ await form.parse(req, async function(err,fields,files) {
             }
             await s3.upload(params, async (err, data) => {
                 if (err) {
-                 console.log(err)
                 }
-                console.log(data)
               let song = await Song.create({
                     userId: req.user.dataValues.id,
                     imageUrl:'S2otpG1NGNF93T22fLYsZzmExptk2LKjqrFk2LEFWLJs2xBtiybFiCrFk2LEFWLJsWIKsWTYsQVYsmxYgqxZNixBVgmwBlgwFONsWYANFmADRZgA2xZgA2wYANsWYANsWYANFmADbFmADbFmADRZgA2wYANsWYANBgAAAOAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD',
@@ -110,7 +102,6 @@ await form.parse(req, async function(err,fields,files) {
 
 router.delete('/:id',requireAuth,asyncHandler(async (req,res)=> {
 //deleting song here along with comments
-console.log("hit delete song")
 let id = req.params.id;
 id = +id;
 

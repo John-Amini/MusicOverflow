@@ -11,7 +11,6 @@ const EditSongForm = ({ song, hideForm }) => {
 
 
     async function checkSpecialCharacters(title){
-      console.log(title)
       const specialChars = /[`!@#$%^&*_+\-=\[\]{};:"\\|,.<>\/?~]/;
       return specialChars.test(title);
   }
@@ -27,7 +26,6 @@ const EditSongForm = ({ song, hideForm }) => {
     e.preventDefault();
     let errors = [];
     if(await checkSpecialCharacters(newTitle)){
-      console.log("SPECIAL CHARACTER ALERT")
       errors.push("No special characters allowed")
       setValidationErrors(errors);
       return;

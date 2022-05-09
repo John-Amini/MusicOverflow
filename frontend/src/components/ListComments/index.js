@@ -9,10 +9,6 @@ function ListComments({song}) {
   const sessionUser = useSelector(state => state.session.user);
   const comments = useSelector(state => state.comment);
   const [isLoading,setIsLoading] = useState(true);
-  console.log("LIST COMMENTS")
-  console.log(comments);
-  console.log(song.id);
-  console.log(comments[song.id])
   const dispatch = useDispatch();
     useEffect(async ()=> {
         await dispatch(loadComments(song.id))

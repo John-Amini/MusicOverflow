@@ -13,13 +13,11 @@ function LoginFormPage() {
   const [errors, setErrors] = useState([]);
 
   if (sessionUser) {
-    console.log("logged in")
     return (
     <Redirect to="/" />
   );
   }
   const handleDemoUser = (e) => {
-    console.log("handle Demo user")
     e.preventDefault()
     setErrors([]);
     return dispatch(sessionActions.login({ credential:'Demo-lition',password:'password' }))
@@ -29,7 +27,6 @@ function LoginFormPage() {
       });
   }
   const handleSubmit = (e) => {
-    console.log("sign in normally")
     e.preventDefault();
     setErrors([]);
     return dispatch(sessionActions.login({ credential, password }))

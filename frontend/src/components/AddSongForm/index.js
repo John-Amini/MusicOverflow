@@ -46,7 +46,6 @@ const AddSongForm = ({ }) => {
 			fileInput.disabled = true;
 			titleInput.disabled = true;
 			const createdSong = await dispatch(addSong(formData,sessionUser.username));
-			console.log(createdSong);
 			if(createdSong.errors){
 				for(let currErr in createdSong.errors){
 					if(createdSong.errors[currErr] === "You provided a song title that you have already uploaded."){

@@ -39,10 +39,8 @@ const editCommentType = (comment,newContent) => {
 //action creator
 
 export const loadComments = (id) => async(dispatch) => {
-    console.log("load comments ACTION");
     const response = await fetch(`/api/comments/songs/${id}`)
     const data = await response.json();
-    console.log(data)
     await dispatch(loadCommentType(data.comments))
     return response;
 }
@@ -84,9 +82,7 @@ export const editComment= (comment,newContent) => async (dispatch) => {
     method:"PUT",
     body:JSON.stringify({comment,newContent})
   })
-  console.log(response);
   let body = await response.json();
-  console.log(body.comment);
   await dispatch(editCommentType(comment,newContent));
   return body;
 }
@@ -100,36 +96,23 @@ const commentsReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOAD_COMMENT:
         newState = Object.assign({},state);
-        console.log("THIS IS THE NEW STATE AFTER THE SPREAD OPERTOR ON ORIGINAL STATE")
-        console.log(newState);
         newState[action.payload[0]?.songId] = [...action.payload]
-        console.log("THIS IS THE NEW STATE IN THE REDUCER")
-        console.log(newState)
         return newState;
     case ADD_COMMENT:
         newState = Object.assign({},state);
-        console.log("ADD COMMENT REDUCER")
-        console.log(action.comment);
         if(Object.keys(newState).includes(action.comment.songId.toString())){
           newState[action.comment.songId].unshift(action.comment);
         }
         else{
           newState[action.comment.songId] = [action.comment];
         }
-        console.log(newState);
         return newState;
     case DELETE_COMMENT:
-        console.log("DELETE REDUCER")
         newState = Object.assign({},state);
-        console.log(newState)
-        console.log(action.comment.songId);
-        console.log(Object.keys(newState).includes(action.comment.songId.toString()));
 
         if(Object.keys(newState).includes(action.comment.songId.toString())){
-          console.log("go into if")
           let temp = newState[action.comment.songId]
           let index = -1;
-          console.log(index)
           for(let x= 0; x < temp.length; x++){
             if(temp[x].id === action.comment.id){
               index = x;
@@ -139,7 +122,6 @@ const commentsReducer = (state = initialState, action) => {
           return newState;
         }
       case EDIT_COMMENT:
-        console.log('EDIT COMMENT REDUCER');
         newState = Object.assign({},state);
         if(Object.keys(newState).includes(action.comment.songId.toString())){
           let tempEdit = newState[action.comment.songId];
